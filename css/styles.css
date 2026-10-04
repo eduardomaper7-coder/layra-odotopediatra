@@ -296,6 +296,10 @@ p{ margin:0 0 1em; }
   position:relative; overflow:hidden;
 }
 .split-art svg{ width:52%; opacity:.95; }
+.split-art--photo{ background: var(--white); box-shadow: var(--shadow); }
+.split-art--photo::after{ display:none; }
+.split-art--photo picture{ position:absolute; inset:0; }
+.split-art--photo img{ width:100%; height:100%; object-fit:cover; object-position: 50% 20%; display:block; }
 .split-art::after{
   content:""; position:absolute; inset:0;
   background: radial-gradient(220px 220px at 20% 15%, rgba(255,255,255,.18), transparent 60%);
@@ -470,3 +474,290 @@ p{ margin:0 0 1em; }
 .mobile-nav a{ display:block; padding: 14px 4px; font-size:1.05rem; border-bottom:1px solid var(--border); }
 .mobile-nav .m-title{ font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; color:var(--coral); font-weight:700; padding: 18px 4px 6px; }
 .mobile-nav .btn{ margin-top:20px; }
+
+/* ==========================================================================
+   Cita online — formulario de reserva y confirmación de pago
+   ========================================================================== */
+
+.btn-teal{
+  background: var(--teal);
+  color: var(--white);
+  box-shadow: 0 10px 24px -8px rgba(0,151,178,.55);
+}
+.btn-teal:hover{ background: var(--teal-dark); transform: translateY(-2px); }
+.btn-lg{ padding: 17px 36px; font-size: 1.05rem; }
+
+/* Layout de la página */
+.booking-wrap{
+  display:grid;
+  grid-template-columns: minmax(0,1.7fr) minmax(0,1fr);
+  gap: 30px;
+  align-items:start;
+}
+.booking-card{
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 34px;
+}
+.booking-title{ font-size: 1.5rem; margin-bottom: 6px; }
+.booking-title-sm{ font-size: 1.15rem; margin-bottom: 6px; }
+.booking-sub{ color: var(--ink-soft); font-size: .92rem; margin-bottom: 22px; }
+.booking-sep{ border:0; border-top:1px solid var(--border); margin: 30px 0 24px; }
+.req{ color: var(--coral); font-weight:700; }
+.opt{ color: var(--ink-soft); font-weight:400; font-size:.84rem; }
+
+/* Campos */
+.field{ margin-bottom: 18px; }
+.field label,
+.label-as-text{
+  display:block;
+  font-weight:600;
+  font-size:.92rem;
+  margin-bottom: 7px;
+  color: var(--ink);
+}
+.field input[type="text"],
+.field input[type="tel"],
+.field input[type="email"],
+.field textarea,
+.field select{
+  width:100%;
+  font-family: var(--font-body);
+  font-size: .96rem;
+  color: var(--ink);
+  background: var(--teal-pale);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 15px;
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.field textarea{ resize: vertical; min-height: 104px; line-height:1.55; }
+.field select{
+  appearance:none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300778D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8.5 12 15l7-6.5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+  padding-right: 42px;
+  cursor:pointer;
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+  outline:none;
+  background: var(--white);
+  border-color: var(--teal);
+  box-shadow: 0 0 0 4px rgba(0,151,178,.13);
+}
+.field input::placeholder,
+.field textarea::placeholder{ color:#9DB3BA; }
+.form-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+
+.field-error{
+  display:none;
+  font-size:.84rem;
+  color: var(--coral-dark);
+  margin-top: 6px;
+  font-weight:500;
+}
+.field-error.is-visible{ display:block; }
+
+/* Franjas horarias */
+.slot-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.slot-grid--2{ grid-template-columns: repeat(2,1fr); }
+.slot-grid--2 .slot-time{ font-size:1.05rem; }
+.slot{ display:block; cursor:pointer; }
+.slot input{ position:absolute; opacity:0; width:0; height:0; }
+.slot-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  padding: 16px 10px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  background: var(--teal-pale);
+  text-align:center;
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.slot-time{ font-weight:700; font-size:1rem; color: var(--teal-dark); }
+.slot-meta{ font-size:.78rem; color: var(--ink-soft); }
+.slot:hover .slot-box{ border-color: var(--teal); transform: translateY(-2px); }
+.slot input:checked + .slot-box{
+  border-color: var(--coral);
+  background: var(--coral-light);
+}
+.slot input:checked + .slot-box .slot-time{ color: var(--coral-dark); }
+.slot input:focus-visible + .slot-box{ box-shadow: 0 0 0 4px rgba(0,151,178,.18); }
+
+/* Condiciones */
+.terms-box{
+  max-height: 260px;
+  overflow-y:auto;
+  background: var(--teal-pale);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px 18px 8px;
+  margin-bottom: 20px;
+}
+.terms-box ol{ list-style: decimal; margin:0; padding-left: 24px; }
+.terms-box li{
+  font-size:.88rem;
+  line-height:1.6;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+.terms-box li:last-child{ margin-bottom:0; }
+.terms-box strong{ color: var(--ink); }
+
+/* Casillas de aceptación */
+.check-row{
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor:pointer;
+  transition: border-color .18s ease;
+}
+.check-row:hover{ border-color: var(--teal); }
+.check-row input[type="checkbox"]{
+  flex-shrink:0;
+  width: 20px; height: 20px;
+  margin-top: 2px;
+  accent-color: var(--teal);
+  cursor:pointer;
+}
+.check-row span{ font-size:.84rem; line-height:1.6; color: var(--ink-soft); }
+.check-row a{ color: var(--teal-dark); text-decoration: underline; }
+.check-row + .field-error{ margin: -2px 0 10px; }
+
+/* Resumen y botón de pago */
+.pay-summary[hidden], .success-detail[hidden]{ display:none !important; }
+.pay-summary{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  background: var(--teal-light);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  margin: 18px 0 14px;
+}
+.pay-summary-label{ font-size:.76rem; text-transform:uppercase; letter-spacing:.08em; color: var(--teal-dark); font-weight:600; }
+.pay-summary strong{ font-size:1rem; color: var(--ink); }
+.btn-pay{ margin-top: 10px; }
+.btn-pay.is-loading{ opacity:.7; cursor: progress; }
+.btn-pay:disabled{ transform:none; }
+.form-help{
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--teal-pale);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.form-help a{ color: var(--teal-dark); white-space: nowrap; }
+.form-help a:hover{ text-decoration: underline; }
+.form-note{
+  font-size:.82rem;
+  color: var(--ink-soft);
+  text-align:center;
+  margin: 12px 0 0;
+}
+.form-alert{
+  margin: 12px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--coral-light);
+  color: var(--coral-dark);
+  font-size:.88rem;
+  font-weight:500;
+  text-align:center;
+}
+
+/* Columna lateral */
+.booking-aside{ display:flex; flex-direction:column; gap: 18px; position: sticky; top: 92px; }
+.aside-card{
+  background: var(--white);
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+.aside-card h3{ font-size:1.1rem; margin-bottom: 10px; }
+.aside-card p{ font-size:.9rem; color: var(--ink-soft); margin-bottom: 16px; }
+.aside-card--teal{ background: var(--teal-light); border-color: #CDEAF0; }
+.steps{ list-style: decimal; padding-left: 20px; margin:0; }
+.steps li{ font-size:.9rem; color: var(--ink-soft); margin-bottom: 8px; line-height:1.55; }
+.steps li:last-child{ margin-bottom:0; }
+
+/* Página de confirmación */
+.success-section{ background: linear-gradient(180deg, var(--teal-light), var(--cream) 70%); }
+.success-card{
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--white);
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 46px 40px;
+  text-align:center;
+}
+.success-icon{
+  width: 76px; height: 76px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  background: var(--teal-light);
+  color: var(--teal);
+}
+.success-icon svg{ width: 40px; height: 40px; }
+.success-card h1{ font-size: clamp(1.7rem, 3.4vw, 2.4rem); }
+.success-card .lede{ max-width: 520px; margin: 0 auto 26px; color: var(--ink-soft); }
+.success-detail{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  width: fit-content;
+  max-width: 100%;
+  background: var(--coral-light);
+  border-radius: var(--radius-sm);
+  padding: 14px 26px;
+  margin: 0 auto 26px;
+}
+.success-detail-label{ font-size:.76rem; text-transform:uppercase; letter-spacing:.08em; color: var(--coral-dark); font-weight:600; }
+.success-detail strong{ font-size:1.05rem; color: var(--ink); }
+.success-reminders{
+  text-align:left;
+  background: var(--teal-pale);
+  border-radius: var(--radius-sm);
+  padding: 22px 26px;
+  margin: 34px 0 26px;
+}
+.success-reminders h2{ font-size:1.1rem; margin-bottom: 10px; }
+.success-reminders ul{ list-style: disc; padding-left: 20px; }
+.success-reminders li{ font-size:.88rem; color: var(--ink-soft); line-height:1.6; margin-bottom: 9px; }
+.success-reminders li:last-child{ margin-bottom:0; }
+.success-back{ font-size:.9rem; color: var(--teal-dark); font-weight:600; }
+.success-back:hover{ text-decoration: underline; }
+
+@media (max-width: 980px){
+  .booking-wrap{ grid-template-columns: 1fr; }
+  .booking-aside{ position: static; }
+}
+@media (max-width: 640px){
+  .booking-card{ padding: 24px 20px; }
+  .form-grid{ grid-template-columns: 1fr; }
+  .slot-grid{ grid-template-columns: 1fr; }
+  .slot-box{ flex-direction:row; justify-content:space-between; padding: 14px 18px; }
+  .success-card{ padding: 34px 22px; }
+  .hero-actions .btn{ width:100%; }
+}
