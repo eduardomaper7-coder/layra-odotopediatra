@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cita Online — Layra Odontopediatra Tenerife</title>
-<meta name="description" content="Reserva tu cita online de 30 minutos con la Dra. Layra González Cusidó. Elige día y hora, confirma y paga de forma segura.">
+<meta name="description" content="Reserva tu cita online con la Dra. Layra González Cusidó. Elige día y hora, confirma y paga de forma segura.">
 <link rel="canonical" href="https://www.layraodontopediatra.com/cita-online.html">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cita Online — Layra Odontopediatra Tenerife">
-<meta property="og:description" content="Reserva tu cita online de 30 minutos con la Dra. Layra González Cusidó. Elige día y hora, confirma y paga de forma segura.">
+<meta property="og:description" content="Reserva tu cita online con la Dra. Layra González Cusidó. Elige día y hora, confirma y paga de forma segura.">
 <meta property="og:image" content="https://www.layraodontopediatra.com/img/logo.png">
 <meta property="og:url" content="https://www.layraodontopediatra.com/cita-online.html">
 <meta property="og:locale" content="es_ES">
@@ -88,8 +88,8 @@
   <div class="container">
     <div class="breadcrumbs"><a href="index.html">Inicio</a><span>/</span><span>Cita online</span></div>
     <div class="eyebrow">Cita online</div>
-    <h1>Reserva tu consulta online de 30 minutos</h1>
-    <p class="lede">Cuéntanos qué te preocupa, elige el día y la hora que mejor os venga y confirma la cita. La videollamada dura 30 minutos y la realiza la propia Dra. Layra.</p>
+    <h1>Reserva tu consulta online</h1>
+    <p class="lede">Cuéntanos qué te preocupa, elige el día y la hora que mejor os venga y confirma la cita. La videollamada la realiza la propia Dra. Layra y dura 30 minutos si es la primera consulta o 15 minutos si ya eres paciente.</p>
   </div>
 </section>
 
@@ -155,7 +155,7 @@
       <hr class="booking-sep">
 
       <h3 class="booking-title-sm">Horario disponible</h3>
-      <p class="booking-sub">Las citas online se realizan los <strong>tres primeros lunes de cada mes</strong>, en turnos de 30 minutos.</p>
+      <p class="booking-sub">Las citas online se realizan los <strong>tres primeros lunes de cada mes</strong>, en turnos de <strong>30 minutos</strong> para la primera consulta y de <strong>15 minutos</strong> si ya eres paciente.</p>
 
       <div class="field">
         <label for="fecha">Día de la cita <span class="req">*</span></label>
@@ -194,7 +194,7 @@
           <li><strong>El importe no se devuelve.</strong> El pago realizado no es reembolsable en ningún caso. Lo que sí es posible es reprogramar la cita para otro día, en las condiciones que se indican a continuación.</li>
           <li><strong>Reprogramación con 24 horas de antelación.</strong> Si no puedes asistir, avísanos por WhatsApp o correo electrónico con un mínimo de 24 horas de antelación respecto a la hora de la cita y la reprogramaremos para otro día disponible, sin coste adicional.</li>
           <li><strong>Avisos con menos de 24 horas y ausencias.</strong> Si la cancelación se comunica con menos de 24 horas de antelación, o si no te presentas a la cita, se pierde el derecho a reprogramarla y el importe abonado no se devuelve ni se guarda como saldo.</li>
-          <li><strong>Duración y puntualidad.</strong> Cada cita dura 30 minutos y comienza a la hora reservada. El tiempo que transcurra desde la hora de inicio hasta que te conectes se descuenta de la consulta y no se recupera: por ejemplo, si tu cita es a las 10:00 y te conectas a las 10:10, se habrán perdido 10 minutos y la consulta finalizará igualmente a las 10:30.</li>
+          <li><strong>Duración y puntualidad.</strong> La primera consulta dura 30 minutos y la consulta para pacientes, 15 minutos. Cada cita comienza a la hora reservada. El tiempo que transcurra desde la hora de inicio hasta que te conectes se descuenta de la consulta y no se recupera: por ejemplo, si tu cita es a las 10:00 y te conectas a las 10:10, se habrán perdido 10 minutos y la consulta finalizará igualmente a la hora prevista.</li>
           <li><strong>Una reprogramación por cita.</strong> Cada cita puede reprogramarse una sola vez. La nueva fecha se acordará entre los días y franjas disponibles.</li>
           <li><strong>Alcance de la consulta online.</strong> La videoconsulta es de orientación, valoración y seguimiento. No sustituye a una exploración presencial y no permite emitir diagnósticos definitivos, pruebas radiológicas ni prescripciones.</li>
           <li><strong>Medios técnicos.</strong> Es responsabilidad de la familia disponer de conexión a internet, cámara y micrófono en funcionamiento. Los problemas técnicos ajenos a la consulta no dan derecho a devolución, aunque intentaremos reprogramar la cita siempre que sea posible.</li>
@@ -210,7 +210,7 @@
 
       <label class="check-row">
         <input type="checkbox" id="condiciones" name="condiciones" required>
-        <span>He leído y acepto las <strong>condiciones de la cita online</strong> indicadas arriba, incluidas las relativas al pago por adelantado no reembolsable, a la reprogramación con 24 horas de antelación y a la duración de 30 minutos. <span class="req">*</span></span>
+        <span>He leído y acepto las <strong>condiciones de la cita online</strong> indicadas arriba, incluidas las relativas al pago por adelantado no reembolsable, a la reprogramación con 24 horas de antelación y a la duración de la consulta. <span class="req">*</span></span>
       </label>
       <span class="field-error" data-for="condiciones">Debes aceptar las condiciones para continuar.</span>
 
@@ -312,6 +312,25 @@ const PRECIO_CITA = "";
     const r = form.querySelector('input[name="hora"]:checked');
     return r ? r.value : "";
   }
+  /* --- Franjas según el tipo de consulta --- */
+  const FRANJAS = {
+    primera:  { min: 30, horas: [["10:00","10:30"],["10:30","11:00"],["11:00","11:30"]] },
+    paciente: { min: 15, horas: [["10:00","10:15"],["10:30","10:45"],["11:00","11:15"]] }
+  };
+  function actualizarFranjas() {
+    const f = FRANJAS[tipoSeleccionado() || "primera"];
+    form.querySelectorAll('input[name="hora"]').forEach(function (inp, i) {
+      const h = f.horas[i];
+      inp.value = h[0] + " - " + h[1];
+      const box = inp.nextElementSibling;
+      box.querySelector(".slot-time").textContent = h[0] + " – " + h[1];
+      box.querySelector(".slot-meta").textContent = f.min + " minutos";
+    });
+  }
+  form.querySelectorAll('input[name="tipo"]').forEach(function (r) {
+    r.addEventListener("change", function () { actualizarFranjas(); actualizarResumen(); });
+  });
+
   function tipoSeleccionado() {
     const r = form.querySelector('input[name="tipo"]:checked');
     return r ? r.value : "";
