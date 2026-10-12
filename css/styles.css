@@ -221,9 +221,9 @@ p{ margin:0 0 1em; }
 
 /* Grids & cards */
 .grid{ display:grid; gap: 26px; }
-.grid-4{ grid-template-columns: repeat(4,1fr); }
-.grid-3{ grid-template-columns: repeat(3,1fr); }
-.grid-2{ grid-template-columns: repeat(2,1fr); }
+.grid-4{ grid-template-columns: repeat(4,minmax(0,1fr)); }
+.grid-3{ grid-template-columns: repeat(3,minmax(0,1fr)); }
+.grid-2{ grid-template-columns: repeat(2,minmax(0,1fr)); }
 
 .card{
   background: var(--white);
@@ -233,6 +233,7 @@ p{ margin:0 0 1em; }
   box-shadow: var(--shadow-sm);
   transition: transform .2s ease, box-shadow .2s ease;
   height:100%;
+  min-width: 0;
 }
 .card:hover{ transform: translateY(-6px); box-shadow: var(--shadow); }
 .card-icon{
@@ -445,8 +446,8 @@ p{ margin:0 0 1em; }
   .footer-grid{ grid-template-columns: 1fr 1fr; }
   .ig-section{ grid-template-columns: 1fr; }
   .ig-grid{ max-width: 360px; margin: 0 auto; }
-  .grid-4{ grid-template-columns: repeat(2,1fr); }
-  .grid-3{ grid-template-columns: repeat(2,1fr); }
+  .grid-4{ grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .grid-3{ grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media (max-width: 860px){
   .main-nav{ display:none; }
@@ -455,7 +456,7 @@ p{ margin:0 0 1em; }
 }
 @media (max-width: 640px){
   .section{ padding: 60px 0; }
-  .grid-4, .grid-3, .grid-2{ grid-template-columns: 1fr; }
+  .grid-4, .grid-3, .grid-2{ grid-template-columns: minmax(0,1fr); }
   .cta-banner{ flex-direction:column; text-align:center; }
   .footer-grid{ grid-template-columns: 1fr; gap:32px; }
   .footer-bottom{ flex-direction:column; text-align:center; }
