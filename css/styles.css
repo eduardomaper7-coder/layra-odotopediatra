@@ -345,6 +345,7 @@ p{ margin:0 0 1em; }
 }
 .cta-banner h2{ color:var(--white); margin-bottom:6px; }
 .cta-banner p{ color: rgba(255,255,255,.85); margin:0; }
+.cta-actions{ display:flex; flex-wrap:wrap; gap:12px; }
 
 /* Hours table */
 .hours-table{ width:100%; border-collapse:collapse; }
