@@ -76,3 +76,28 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.key === 'ArrowRight') show(current + 1);
   });
 });
+
+/* Carrusel de fotos del hero (solo se activa en móvil/tablet) */
+document.addEventListener('DOMContentLoaded', function () {
+  var slider = document.querySelector('.hero-slider');
+  if (!slider) return;
+  var slides = slider.querySelectorAll('.hero-slide');
+  var dots = slider.querySelectorAll('.hero-dots span');
+  var mq = window.matchMedia('(max-width: 980px)');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var i = 0, timer = null;
+  function go(n) {
+    slides[i].classList.remove('is-active'); if (dots[i]) dots[i].classList.remove('is-active');
+    i = (n + slides.length) % slides.length;
+    slides[i].classList.add('is-active'); if (dots[i]) dots[i].classList.add('is-active');
+  }
+  function start() {
+    if (timer || !mq.matches || reduce.matches) return;
+    slides.forEach(function (s) { var im = s.querySelector('img'); if (im) im.loading = 'eager'; });
+    timer = setInterval(function () { go(i + 1); }, 3500);
+  }
+  function stop() { clearInterval(timer); timer = null; }
+  start();
+  (mq.addEventListener ? mq.addEventListener('change', function () { mq.matches ? start() : stop(); }) : mq.addListener(function () { mq.matches ? start() : stop(); }));
+  document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+});
